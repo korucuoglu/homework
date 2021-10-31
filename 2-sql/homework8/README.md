@@ -1,25 +1,19 @@
-# SQL Ödev 7
+# SQL Ödev 8
 
-1- film tablosunda bulunan filmleri rating değerlerine göre gruplayınız.
+1- test veritabanınızda employee isimli sütun bilgileri id(INTEGER), name VARCHAR(50), birthday DATE, email VARCHAR(100) olan bir tablo oluşturalım.
 
 ```bash
-select rating, count(title) from film group by rating;
+create table employee  ( id serial primary key,  name VARCHAR(50),  email VARCHAR(50), date DATE );
 ```
 
-2- film tablosunda bulunan filmleri replacement_cost sütununa göre grupladığımızda film sayısı 50 den fazla olan replacement_cost değerini ve karşılık gelen film sayısını sıralayınız.
+2- Sütunların her birine göre diğer sütunları güncelleyecek 5 adet UPDATE işlemi yapalım.
 
 ```bash
-select replacement_cost, count(*)  from film group by replacement_cost  having count(*) > 50;
+update employee  set name = 'Halit' where id = 50;
 ```
 
-3- customer tablosunda bulunan store_id değerlerine karşılık gelen müşteri sayılarını nelerdir?
+3- Sütunların her birine göre ilgili satırı silecek 5 adet DELETE işlemi yapalım.
 
 ```bash
-select store_id, count(customer_id) from customer group by store_id;
-```
-
-4- city tablosunda bulunan şehir verilerini country_id sütununa göre gruplandırdıktan sonra en fazla şehir sayısı barındıran country_id bilgisini ve şehir sayısını paylaşınız.
-
-```bash
-select country_id, count(city_id) from city group by country_id order by count desc;
+delete from employee  where id = 10
 ```
