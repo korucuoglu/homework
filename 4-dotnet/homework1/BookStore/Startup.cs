@@ -24,7 +24,7 @@ namespace BookStore
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddScoped(typeof(IBookService<Book>), typeof(BookService));
+            services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -32,6 +32,8 @@ namespace BookStore
             });
 
             services.AddDbContext<DataContext>(opt => opt.UseInMemoryDatabase(databaseName: "BookStoreDB"));
+
+            services.AddAutoMapper(typeof(Startup));
 
 
 

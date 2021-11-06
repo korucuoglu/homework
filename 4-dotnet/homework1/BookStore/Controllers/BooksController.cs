@@ -1,9 +1,10 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using BookStore.BookOperations.CreateBook;
+using AutoMapper;
 using BookStore.Models;
 using BookStore.Service;
+using BookStore.Shared;
+using BookStore.ViewModels.Books;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookStore.Controllers
@@ -11,20 +12,27 @@ namespace BookStore.Controllers
 
     [ApiController]
     [Route("api/{[controller]}")]
-    public class BooksController : ControllerBase
+    public class BooksController : CustomBaseController
     {
-        private readonly IBookService<Book> _service;
+        private readonly IGenericService<Book> _service;
+        private readonly IMapper _mapper;
 
-        public BooksController(IBookService<Book> service)
+        public BooksController(IGenericService<Book> service, IMapper mapper)
         {
             _service = service;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> GetAll()
         {
+            //var data = _mapper.Map<Response<List<GetBookViewModel>>>(await _service.GetAllAsync());
 
-            return Ok(await _service.GetAll());
+            var data = await _service.GetAllAsync();
+
+            var MappingData = _mapper.Map<Response<List<GetBookViewModel>>>(data);
+
+            return CreateActionResultInstance(MappingData);
         }
 
 
@@ -32,55 +40,34 @@ namespace BookStore.Controllers
         public async Task<IActionResult> GetById(int id)
         {
 
-            var list = await _service.GetByIdAsyc(id);
-            return Ok(list);
+            var data = await _service.GetByIdAsyc(id);
+            var MappingData = _mapper.Map<Response<GetBookViewModel>>(data);
+
+            return CreateActionResultInstance(MappingData);
 
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] CreateBookCommand model)
+        public async Task<IActionResult> Add([FromBody] CreateBookViewModel model)
         {
 
-            await _service.AddAsync(model);
-            return NoContent();
+            var data = await _service.AddAsync(_mapper.Map<Book>(model));
+            return CreateActionResultInstance(data);
         }
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] Book updateModel)
+        public async Task<IActionResult> Update([FromBody] UpdateBookViewModel updateModel)
         {
 
-            var data = await _service.GetByIdAsyc(updateModel.Id);
-
-            if (data == null)
-            {
-
-                return BadRequest("Bu Id değerine sahip bir ürün bulunamadı");
-            }
-
-
-            await _service.Update(updateModel);
-            return NoContent();
+            var data = await _service.Update(_mapper.Map<Book>(updateModel));
+            return CreateActionResultInstance(data);
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
+            var data = _service.DeleteById(id);
+            return CreateActionResultInstance(data);
 
-            var data = _service.GetByIdAsyc(id);
-
-            if (data == null)
-            {
-                return BadRequest("Bu Id değerine sahip bir ürün bulunamadı");
-            }
-
-            _service.DeleteById(id);
-
-
-            /* 
-            _service.Delete(data); hata vermektedir. Çünkü biz Task<Book> yollarken o bizden Book beklemekte. 
-
-            */
-
-            return NoContent();
         }
     }
 }
