@@ -1,6 +1,6 @@
-namespace BookStore.BookOperations.GetBooks
+namespace BookStore.ViewModels.Books
 {
-    public class GetBooksQuery
+    public class GetBookViewModel
     {
         public string Title { get; set; }
         public string Genre { get; set; }

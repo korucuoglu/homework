@@ -1,4 +1,4 @@
-namespace BookStore.BookOperations.Common
+namespace BookStore.ViewModels.Books
 {
     public enum GenreEnum
     {

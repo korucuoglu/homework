@@ -33,6 +33,8 @@ namespace BookStore
 
             services.AddDbContext<DataContext>(opt => opt.UseInMemoryDatabase(databaseName: "BookStoreDB"));
 
+            services.AddAutoMapper(typeof(Startup));
+
 
 
 

@@ -1,23 +1,21 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using BookStore.BookOperations.CreateBook;
-using BookStore.BookOperations.GetBooks;
 using BookStore.Models;
 
 namespace BookStore.Service
 {
     public interface IBookService<T> where T : class
     {
-        Task<GetBooksQuery> GetByIdAsyc(int id);
+        Task<T> GetByIdAsyc(int id);
 
-        Task<List<GetBooksQuery>> GetAll();
+        Task<List<T>> GetAll();
 
-        Task AddAsync(CreateBookCommand book);
+        Task AddAsync(T data);
 
-        Task<T> Update(Book book);
+        Task<T> Update(T data);
 
         void DeleteById(int id);
-        void Delete(Book book);
+        void Delete(T book);
 
     }
 }

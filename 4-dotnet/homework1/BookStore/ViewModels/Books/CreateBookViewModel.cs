@@ -1,10 +1,9 @@
 using System;
 
-namespace BookStore.BookOperations.CreateBook
+namespace BookStore.ViewModels.Books
 {
-    public class CreateBookCommand
+    public class CreateBookViewModel
     {
-
         public string Title { get; set; }
         public int GenreId { get; set; }
         public int PageCount { get; set; }

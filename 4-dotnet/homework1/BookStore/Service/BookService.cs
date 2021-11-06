@@ -2,11 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BookStore.BookOperations.Common;
-using BookStore.BookOperations.CreateBook;
-using BookStore.BookOperations.GetBooks;
 using BookStore.Entity;
 using BookStore.Models;
+using BookStore.ViewModels.Books;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookStore.Service
@@ -18,21 +16,13 @@ namespace BookStore.Service
         {
             _context = context;
         }
-        public async Task AddAsync(CreateBookCommand data)
+        public async Task AddAsync(Book book)
         {
-            if (_context.Books.Any(x => x.Title == data.Title))
+            if (_context.Books.Any(x => x.Title == book.Title))
             {
 
                 throw new InvalidOperationException("Kitap zaten mevcut");
             }
-
-            Book book = new()
-            {
-                Title = data.Title,
-                GenreId = data.GenreId,
-                Publishdate = data.Publishdate,
-                PageCount = data.PageCount
-            };
 
             await _context.AddAsync(book);
             _context.SaveChanges();
@@ -50,35 +40,16 @@ namespace BookStore.Service
             _context.Books.Remove(book);
         }
 
-        public async Task<List<GetBooksQuery>> GetAll()
+        public async Task<List<Book>> GetAll()
         {
-            return await _context.Books.Select(x => new GetBooksQuery
-            {
-
-                Title = x.Title,
-                Genre = ((GenreEnum)x.GenreId).ToString(),
-                PageCount = x.PageCount,
-                Publishdate = x.Publishdate.Date.ToString("dd/mm/yyyy")
-
-
-
-            }).ToListAsync();
+            return await _context.Books.ToListAsync();
 
 
         }
 
-        public async Task<GetBooksQuery> GetByIdAsyc(int id)
+        public async Task<Book> GetByIdAsyc(int id)
         {
-            return await _context.Books.Where(book => book.Id == id).Select(x => new GetBooksQuery
-            {
-                Title = x.Title,
-                Genre = ((GenreEnum)x.GenreId).ToString(),
-                PageCount = x.PageCount,
-                Publishdate = x.Publishdate.Date.ToString("dd/mm/yyyy")
-
-
-
-            }).FirstOrDefaultAsync();
+            return await _context.Books.FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<Book> Update(Book updateModel)
