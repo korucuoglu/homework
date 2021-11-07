@@ -15,5 +15,7 @@ namespace BookStore.Shared
 
         public static Response<T> Fail(List<string> errors, int statusCode) { return new Response<T> { Errors = errors, StatusCode = statusCode, IsSuccessful = false }; }
         public static Response<T> Fail(string error, int statusCode) { return new Response<T> { Errors = new List<string>() { error }, StatusCode = statusCode, IsSuccessful = false }; }
+
+
     }
 }

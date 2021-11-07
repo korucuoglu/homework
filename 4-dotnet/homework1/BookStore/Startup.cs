@@ -1,8 +1,11 @@
 using BookStore.Entity;
+using BookStore.Filter;
 using BookStore.Models;
 using BookStore.Service;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,7 +28,10 @@ namespace BookStore
         {
 
             services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
-            services.AddControllers();
+            services.AddScoped(typeof(NotFoundFilter<>));
+            services.AddScoped(typeof(ValidationFilter<>));
+
+            services.AddControllers().AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<Startup>());
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "BookStore", Version = "v1" });
@@ -34,6 +40,11 @@ namespace BookStore
             services.AddDbContext<DataContext>(opt => opt.UseInMemoryDatabase(databaseName: "BookStoreDB"));
 
             services.AddAutoMapper(typeof(Startup));
+
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
 
 
 

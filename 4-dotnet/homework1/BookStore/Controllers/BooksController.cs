@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using BookStore.Filter;
 using BookStore.Models;
 using BookStore.Service;
 using BookStore.Shared;
@@ -26,7 +27,6 @@ namespace BookStore.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            //var data = _mapper.Map<Response<List<GetBookViewModel>>>(await _service.GetAllAsync());
 
             var data = await _service.GetAllAsync();
 
@@ -37,6 +37,7 @@ namespace BookStore.Controllers
 
 
         [HttpGet("{id}")]
+        [ServiceFilter(typeof(NotFoundFilter<Book>))]
         public async Task<IActionResult> GetById(int id)
         {
 
@@ -48,6 +49,7 @@ namespace BookStore.Controllers
         }
 
         [HttpPost]
+        [ServiceFilter(typeof(ValidationFilter<CreateBookViewModel>))]
         public async Task<IActionResult> Add([FromBody] CreateBookViewModel model)
         {
 
@@ -55,6 +57,7 @@ namespace BookStore.Controllers
             return CreateActionResultInstance(data);
         }
         [HttpPut]
+        [ServiceFilter(typeof(ValidationFilter<UpdateBookViewModel>))]
         public async Task<IActionResult> Update([FromBody] UpdateBookViewModel updateModel)
         {
 
