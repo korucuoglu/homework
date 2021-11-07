@@ -66,6 +66,7 @@ namespace BookStore.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ServiceFilter(typeof(NotFoundFilter<Book>))]
         public IActionResult Delete(int id)
         {
             var data = _service.DeleteById(id);
