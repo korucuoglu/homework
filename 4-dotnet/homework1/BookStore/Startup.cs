@@ -1,7 +1,8 @@
 using BookStore.Entity;
-using BookStore.Filter;
-using BookStore.Models;
-using BookStore.Service;
+using BookStore.Filters;
+using BookStore.Middlewares;
+using BookStore.Services;
+using BookStore.Services.Logger;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -27,9 +28,12 @@ namespace BookStore
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddSingleton(typeof(ILoggerService), typeof(DbLogger));
+
             services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
+
             services.AddScoped(typeof(NotFoundFilter<>));
-            services.AddScoped(typeof(ValidationFilter<>));
+            services.AddScoped<ValidationFilter>();
 
             services.AddControllers().AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<Startup>());
             services.AddSwaggerGen(c =>
@@ -67,6 +71,8 @@ namespace BookStore
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseCustomExceptionMiddleware();
 
             app.UseEndpoints(endpoints =>
             {

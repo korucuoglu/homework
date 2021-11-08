@@ -10,7 +10,7 @@ namespace BookStore.Validation
         public CreateBookViewModelValidator()
         {
             RuleFor(x => x.GenreId).NotEmpty().WithMessage("Genre türü boş olamaz");
-            RuleFor(x => x.Title).NotEmpty().WithMessage("Başlık boş olamaz");
+            RuleFor(x => x.Title).NotNull().NotEmpty().WithMessage("Başlık boş olamaz");
         }
     }
 

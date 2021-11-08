@@ -5,7 +5,7 @@ using BookStore.Shared;
 using BookStore.ViewModels;
 using BookStore.ViewModels.Books;
 
-namespace BookStore.Service
+namespace BookStore.Services
 {
     public interface IGenericService<T> where T : class
     {

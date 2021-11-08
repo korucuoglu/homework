@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
-using BookStore.Filter;
+using BookStore.Filters;
 using BookStore.Models;
-using BookStore.Service;
+using BookStore.Services;
+using BookStore.Services.Logger;
 using BookStore.Shared;
 using BookStore.ViewModels.Books;
 using Microsoft.AspNetCore.Mvc;
@@ -17,11 +18,13 @@ namespace BookStore.Controllers
     {
         private readonly IGenericService<Book> _service;
         private readonly IMapper _mapper;
+        public ILoggerService _logger;
 
-        public BooksController(IGenericService<Book> service, IMapper mapper)
+        public BooksController(IGenericService<Book> service, IMapper mapper, ILoggerService logger)
         {
             _service = service;
             _mapper = mapper;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -48,16 +51,19 @@ namespace BookStore.Controllers
 
         }
 
+        [ServiceFilter(typeof(ValidationFilter))]
         [HttpPost]
-        [ServiceFilter(typeof(ValidationFilter<CreateBookViewModel>))]
         public async Task<IActionResult> Add([FromBody] CreateBookViewModel model)
         {
-
+            if (!ModelState.IsValid)
+            {
+                throw new System.Exception("Model üzerinden gelen verileri doğrulayın");
+            }
             var data = await _service.AddAsync(_mapper.Map<Book>(model));
             return CreateActionResultInstance(data);
         }
         [HttpPut]
-        [ServiceFilter(typeof(ValidationFilter<UpdateBookViewModel>))]
+        [ServiceFilter(typeof(ValidationFilter))]
         public async Task<IActionResult> Update([FromBody] UpdateBookViewModel updateModel)
         {
 

@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using BookStore.Service;
+using BookStore.Services;
 using BookStore.Shared;
 using BookStore.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace BookStore.Filter
+namespace BookStore.Filters
 {
 
     public class NotFoundFilter<TEntity> : IAsyncActionFilter where TEntity : class

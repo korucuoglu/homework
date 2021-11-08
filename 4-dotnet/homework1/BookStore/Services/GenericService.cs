@@ -4,13 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using BookStore.Entity;
-using BookStore.Models;
 using BookStore.Shared;
 using BookStore.ViewModels;
-using BookStore.ViewModels.Books;
 using Microsoft.EntityFrameworkCore;
 
-namespace BookStore.Service
+namespace BookStore.Services
 {
     public class GenericService<T> : IGenericService<T> where T : class
     {
