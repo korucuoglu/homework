@@ -16,46 +16,57 @@ namespace BookStore.Entity
             using (var context = new DataContext(service.GetRequiredService<DbContextOptions<DataContext>>()))
             {
 
-                if (context.Books.Any())
+                if (!context.Genres.Any())
                 {
-                    return;
+
+                    context.Genres.AddRange(
+
+                        new Genre { Name = "Personal Growth" },
+                        new Genre { Name = "Science Fiction" },
+                        new Genre { Name = "Romance" }
+                    );
                 }
-
-                context.Books.AddRange(new Book
-                {
-
-                    Title = "Lean Startup",
-                    GenreId = 1,
-                    PageCount = 200,
-                    Publishdate = new System.DateTime(2001, 06, 12)
-                },
-
-            new Book
-            {
-
-                Title = "İnsanlar ve Hayvanlar",
-                GenreId = 2,
-                PageCount = 350,
-                Publishdate = new System.DateTime(2001, 06, 12)
-            },
-            new Book
-            {
-
-                Title = "Çanlar Kimin İçin Çalıyor",
-                GenreId = 3,
-                PageCount = 500,
-                Publishdate = new System.DateTime(2001, 06, 12)
-            });
 
                 context.SaveChanges();
 
+                if (!context.Books.Any())
+                {
+
+                    context.Books.AddRange(
+
+                    new Book
+                    {
+
+                        Title = "Lean Startup",
+                        GenreId = 1,
+                        PageCount = 200,
+                        Publishdate = new System.DateTime(2001, 06, 12)
+                    },
+
+                    new Book
+                    {
+
+                        Title = "İnsanlar ve Hayvanlar",
+                        GenreId = 2,
+                        PageCount = 350,
+                        Publishdate = new System.DateTime(2001, 06, 12)
+                    },
+                    new Book
+                    {
+
+                        Title = "Çanlar Kimin İçin Çalıyor",
+                        GenreId = 3,
+                        PageCount = 500,
+                        Publishdate = new System.DateTime(2001, 06, 12)
+                    });
+
+                    context.SaveChanges();
+
+                }
+
             }
 
-
-
-
         }
-
 
     }
 

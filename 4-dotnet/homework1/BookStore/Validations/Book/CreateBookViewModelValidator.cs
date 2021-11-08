@@ -1,10 +1,10 @@
 using BookStore.ViewModels.Books;
 using FluentValidation;
 
-namespace BookStore.Validation
+namespace BookStore.Validations.Book
 {
 
-    public class CreateBookViewModelValidator : AbstractValidator<CreateBookViewModel>
+    public class CreateBookViewModelValidator : AbstractValidator<BookCreateViewModel>
     {
 
         public CreateBookViewModelValidator()

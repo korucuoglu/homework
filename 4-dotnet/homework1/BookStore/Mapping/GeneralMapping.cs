@@ -3,6 +3,7 @@ using AutoMapper;
 using BookStore.Models;
 using BookStore.Shared;
 using BookStore.ViewModels.Books;
+using BookStore.ViewModels.Genre;
 
 namespace BookStore.Mapping
 {
@@ -11,13 +12,24 @@ namespace BookStore.Mapping
         public GeneralMapping()
         {
 
-            CreateMap<Book, GetBookViewModel>().ReverseMap();
-            CreateMap<Book, CreateBookViewModel>().ReverseMap();
-            CreateMap<Book, UpdateBookViewModel>().ReverseMap();
+
+            #region Book
+
+            CreateMap<Book, BookGetViewModel>().ForMember(dest => dest.Genre, opt => opt.MapFrom(src => src.Genre.Name));
+
+            CreateMap<BookCreateViewModel, Book>();
+            CreateMap<BookUpdateViewModel, Book>();
+
+            #endregion
+
+            #region Genre 
+
+            CreateMap<Genre, GenreGetViewModel>();
+            CreateMap<GenreCreateViewModel, Genre>();
+            CreateMap<GenreUpdateViewModel, Genre>();
 
 
-            CreateMap<Response<Book>, Response<GetBookViewModel>>().ReverseMap();
-            CreateMap<Response<List<Book>>, Response<List<GetBookViewModel>>>().ReverseMap();
+            #endregion
 
 
 

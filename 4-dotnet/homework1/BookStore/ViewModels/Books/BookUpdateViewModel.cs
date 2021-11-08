@@ -2,7 +2,7 @@ using System;
 
 namespace BookStore.ViewModels.Books
 {
-    public class UpdateBookViewModel
+    public class BookUpdateViewModel
     {
         public int Id { get; set; }
         public string Title { get; set; }

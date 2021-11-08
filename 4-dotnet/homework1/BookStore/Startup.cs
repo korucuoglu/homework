@@ -1,7 +1,6 @@
 using BookStore.Entity;
 using BookStore.Filters;
 using BookStore.Middlewares;
-using BookStore.Services;
 using BookStore.Services.Logger;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
@@ -12,6 +11,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using BookStore.DatabaseOperations.Repositories.Abstract;
+using BookStore.DatabaseOperations.Repositories.Concrete;
+using BookStore.DatabaseOperations.Services.Abstract;
+using BookStore.DatabaseOperations.Services.Concrete;
 
 namespace BookStore
 {
@@ -30,7 +33,12 @@ namespace BookStore
 
             services.AddSingleton(typeof(ILoggerService), typeof(DbLogger));
 
+
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped(typeof(IBookRepository), typeof(BookRepository));
             services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
+            services.AddScoped(typeof(IBookService), typeof(BookService));
+
 
             services.AddScoped(typeof(NotFoundFilter<>));
             services.AddScoped<ValidationFilter>();

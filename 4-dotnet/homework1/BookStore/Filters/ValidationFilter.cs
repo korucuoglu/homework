@@ -13,8 +13,6 @@ namespace BookStore.Filters
 {
     public class ValidationFilter : ActionFilterAttribute
     {
-        private ILoggerService _loger;
-
         private readonly ILoggerService _logger;
 
         public ValidationFilter(ILoggerService logger)

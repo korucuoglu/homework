@@ -2,8 +2,9 @@ using System;
 
 namespace BookStore.ViewModels.Books
 {
-    public class CreateBookViewModel
+    public class BookCreateViewModel
     {
+
         public string Title { get; set; }
         public int GenreId { get; set; }
         public int PageCount { get; set; }

@@ -1,0 +1,2 @@
+1- Genre ile Book arasındaki İnclude Bağlantısını Hallet.
+2- Generic Service olsun hem de AutoMapper işlemlerini de halletsin. 

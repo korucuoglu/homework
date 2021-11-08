@@ -1,7 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using BookStore.Services;
+using BookStore.DatabaseOperations.Services.Abstract;
 using BookStore.Shared;
 using BookStore.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -23,7 +22,7 @@ namespace BookStore.Filters
         {
             var id = Convert.ToInt32(context.RouteData.Values["id"].ToString());
 
-            var data = await _service.GetByIdAsyc(id);
+            var data = await _service.GetByIdAsync<TEntity>(id);
 
             if (data.Data != null)
             {

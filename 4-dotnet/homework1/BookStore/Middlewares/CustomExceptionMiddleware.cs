@@ -21,13 +21,12 @@ namespace BookStore.Middlewares
             var watch = Stopwatch.StartNew();
 
             string message = $"[Request] HTTP {context.Request.Method} - {context.Request.Path}";
-            // System.Console.WriteLine(message);
+
             await _next.Invoke(context);
             _logger.Write(message);
             watch.Stop();
 
             message = $"[Response] HTTP {context.Request.Method} - {context.Request.Path} responded {context.Response.StatusCode} in {watch.Elapsed.TotalMilliseconds} ms";
-            // System.Console.WriteLine(message);
             _logger.Write(message);
 
         }
