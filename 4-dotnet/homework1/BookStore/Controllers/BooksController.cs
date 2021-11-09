@@ -39,7 +39,7 @@ namespace BookStore.Controllers
         public async Task<IActionResult> GetById(int id)
         {
 
-            var data = await _service.GetByIdAsync<BookGetViewModel>(id);
+            var data = await _service.GetFirstOrDefaultWithGenresAsync(id);
 
             return CreateActionResultInstance(data);
 

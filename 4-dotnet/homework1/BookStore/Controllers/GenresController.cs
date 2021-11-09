@@ -6,6 +6,8 @@ using BookStore.DatabaseOperations.Services;
 using Microsoft.AspNetCore.Mvc;
 using BookStore.ViewModels.Genre;
 using BookStore.DatabaseOperations.Services.Abstract;
+using BookStore.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookStore.Controllers
 {
@@ -15,22 +17,24 @@ namespace BookStore.Controllers
 
     public class GenresController : CustomBaseController
     {
-        private readonly IGenericService<Genre> _service;
+        private readonly IGenreService _service;
         private readonly IMapper _mapper;
 
-        public GenresController(IGenericService<Genre> service, IMapper mapper)
+        private readonly DataContext _context;
+
+        public GenresController(IGenreService service, IMapper mapper, DataContext context)
         {
             _service = service;
             _mapper = mapper;
-
+            _context = context;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var data = await _service.GetAllAsync<GenreGetViewModel>();
+            var data = await _context.Genres.Include(x => x.Books).ToListAsync();
 
-            return CreateActionResultInstance(data);
+            return Ok(data);
         }
 
 

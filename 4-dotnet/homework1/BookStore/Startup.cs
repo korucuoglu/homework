@@ -35,15 +35,26 @@ namespace BookStore
 
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-            services.AddScoped(typeof(IBookRepository), typeof(BookRepository));
+
             services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
+
+            services.AddScoped(typeof(IBookRepository), typeof(BookRepository));
             services.AddScoped(typeof(IBookService), typeof(BookService));
+
+            services.AddScoped(typeof(IGenreRepository), typeof(GenreRepository));
+            services.AddScoped(typeof(IGenreService), typeof(GenreService));
 
 
             services.AddScoped(typeof(NotFoundFilter<>));
             services.AddScoped<ValidationFilter>();
 
-            services.AddControllers().AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<Startup>());
+            services.AddControllers().AddNewtonsoftJson(opt =>
+            {
+                opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+
+            })
+
+            .AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<Startup>());
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "BookStore", Version = "v1" });
