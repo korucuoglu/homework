@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using AutoMapper;
 using BookStore.Models;
 using BookStore.Shared;
+using BookStore.ViewModels.Author;
 using BookStore.ViewModels.Books;
 using BookStore.ViewModels.Genre;
 
@@ -25,9 +26,20 @@ namespace BookStore.Mapping
             #region Genre 
 
             CreateMap<Genre, GenreGetViewModel>();
+            CreateMap<Genre, GenreGetViewModelWithBooks>();
             CreateMap<GenreCreateViewModel, Genre>();
             CreateMap<GenreUpdateViewModel, Genre>();
 
+            #endregion
+
+            #region Author
+
+            CreateMap<Author, AuthorGetViewModel>();
+            CreateMap<Author, AuthorGetViewModelWithBooks>();
+
+            CreateMap<AuthorCreateViewModel, Author>();
+            CreateMap<AuthorCreateViewModelWithBooks, Author>();
+            CreateMap<AuthorUpdateViewModel, Author>();
 
             #endregion
 

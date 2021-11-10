@@ -44,6 +44,9 @@ namespace BookStore
             services.AddScoped(typeof(IGenreRepository), typeof(GenreRepository));
             services.AddScoped(typeof(IGenreService), typeof(GenreService));
 
+            services.AddScoped(typeof(IAuthorRepository), typeof(AuthorRepository));
+            services.AddScoped(typeof(IAuthorService), typeof(AuthorService));
+
 
             services.AddScoped(typeof(NotFoundFilter<>));
             services.AddScoped<ValidationFilter>();

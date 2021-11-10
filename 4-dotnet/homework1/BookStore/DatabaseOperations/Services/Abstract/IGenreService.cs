@@ -7,7 +7,7 @@ using BookStore.ViewModels.Genre;
 
 public interface IGenreService : IGenericService<Genre>
 {
-    Task<Response<List<GenreGetViewModel>>> GetAllWithBooks();
-    Task<Response<GenreGetViewModel>> GetFirstWithBooks(int id);
+    Task<Response<List<GenreGetViewModelWithBooks>>> GetAllWithBooks();
+    Task<Response<GenreGetViewModelWithBooks>> GetFirstWithBooks(int id);
 
 }

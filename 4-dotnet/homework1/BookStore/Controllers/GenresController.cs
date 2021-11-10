@@ -2,12 +2,9 @@ using System.Threading.Tasks;
 using AutoMapper;
 using BookStore.Filters;
 using BookStore.Models;
-using BookStore.DatabaseOperations.Services;
 using Microsoft.AspNetCore.Mvc;
 using BookStore.ViewModels.Genre;
-using BookStore.DatabaseOperations.Services.Abstract;
-using BookStore.Entity;
-using Microsoft.EntityFrameworkCore;
+
 
 namespace BookStore.Controllers
 {
@@ -20,33 +17,48 @@ namespace BookStore.Controllers
         private readonly IGenreService _service;
         private readonly IMapper _mapper;
 
-        private readonly DataContext _context;
 
-        public GenresController(IGenreService service, IMapper mapper, DataContext context)
+        public GenresController(IGenreService service, IMapper mapper)
         {
             _service = service;
             _mapper = mapper;
-            _context = context;
+
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var data = await _context.Genres.Include(x => x.Books).ToListAsync();
+            var data = await _service.GetAllAsync<GenreGetViewModel>();
 
-            return Ok(data);
+            return CreateActionResultInstance(data);
+        }
+
+        [HttpGet]
+        [Route("books")]
+        public async Task<IActionResult> GetAllWithBooks()
+        {
+            var data = await _service.GetAllWithBooks();
+
+            return CreateActionResultInstance(data);
         }
 
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         [ServiceFilter(typeof(NotFoundFilter<Genre>))]
         public async Task<IActionResult> GetById(int id)
         {
-
             var data = await _service.GetByIdAsync<GenreGetViewModel>(id);
 
             return CreateActionResultInstance(data);
 
+        }
+
+        [HttpGet("book/{id:int}")] // GET /genres/book/2
+        public async Task<IActionResult> GetFirstWithBooks(int id)
+        {
+            var data = await _service.GetFirstWithBooks(id);
+
+            return CreateActionResultInstance(data);
         }
 
         [ServiceFilter(typeof(ValidationFilter))]

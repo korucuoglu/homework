@@ -21,16 +21,16 @@ namespace BookStore.DatabaseOperations.Services.Concrete
 
         }
 
-        public async Task<Response<List<GenreGetViewModel>>> GetAllWithBooks()
+        public async Task<Response<List<GenreGetViewModelWithBooks>>> GetAllWithBooks()
         {
-            var data = _mapper.Map<List<GenreGetViewModel>>(await _context.GetAllWithBooks());
-            return Response<List<GenreGetViewModel>>.Success(data, 200);
+            var data = _mapper.Map<List<GenreGetViewModelWithBooks>>(await _context.GetAllWithBooks());
+            return Response<List<GenreGetViewModelWithBooks>>.Success(data, 200);
         }
 
-        public async Task<Response<GenreGetViewModel>> GetFirstWithBooks(int id)
+        public async Task<Response<GenreGetViewModelWithBooks>> GetFirstWithBooks(int id)
         {
-            var data = _mapper.Map<GenreGetViewModel>(await _context.GetFirstWithBooks(id));
-            return Response<GenreGetViewModel>.Success(data, 200);
+            var data = _mapper.Map<GenreGetViewModelWithBooks>(await _context.GetFirstWithBooks(id));
+            return Response<GenreGetViewModelWithBooks>.Success(data, 200);
         }
 
         // public async Task<Response<List<BookGetViewModel>>> GetAllWithGenresAsync()

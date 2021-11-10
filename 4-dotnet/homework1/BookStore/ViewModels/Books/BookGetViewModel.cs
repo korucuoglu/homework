@@ -9,6 +9,7 @@ namespace BookStore.ViewModels.Books
         public string Publishdate { get; set; }
         public string Genre { get; set; }
 
-
     }
+
+
 }

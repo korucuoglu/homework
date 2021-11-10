@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using BookStore.DatabaseOperations.Services.Abstract;
+using BookStore.Services.Logger;
 using BookStore.Shared;
 using BookStore.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -12,17 +13,31 @@ namespace BookStore.Filters
     public class NotFoundFilter<TEntity> : IAsyncActionFilter where TEntity : class
     {
         private readonly IGenericService<TEntity> _service;
+        private readonly ILoggerService _logger;
 
-        public NotFoundFilter(IGenericService<TEntity> service)
+        public NotFoundFilter(IGenericService<TEntity> service, ILoggerService logger)
         {
             _service = service;
+            _logger = logger;
         }
 
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            var id = Convert.ToInt32(context.RouteData.Values["id"].ToString());
 
-            var data = await _service.GetByIdAsync<TEntity>(id);
+
+            _logger.Write(" [NotFoundFilter] starting");
+
+            var id = context.RouteData.Values["id"].ToString();
+
+            int n;
+            bool isNumeric = int.TryParse(id, out n);
+
+            if (!isNumeric)
+            {
+                _logger.Write(" [NotFoundFilter] isNumeric False");
+                await next();
+            }
+            var data = await _service.GetByIdAsync<TEntity>(n);
 
             if (data.Data != null)
             {
