@@ -21,7 +21,7 @@ namespace BookStore.DatabaseOperations.Services.Concrete
             _mapper = mapper;
         }
 
-        public async Task<Response<T>> AddAsync<T>(TEntity entity) where T : class
+        public virtual async Task<Response<T>> AddAsync<T>(TEntity entity) where T : class
         {
             var data = _mapper.Map<T>(await _repository.AddAsync(entity));
             return Response<T>.Success(data, 201);
@@ -80,6 +80,13 @@ namespace BookStore.DatabaseOperations.Services.Concrete
         public Response<NoContent> RemoveById(int id)
         {
             var data = _repository.GetByIdAsync(id).Result;
+
+            if (data == null)
+            {
+                return Response<NoContent>.Fail("Böyle bir veri bulunamadı", 404);
+            }
+
+
             _repository.Remove(data);
             return Response<NoContent>.Success(204);
 

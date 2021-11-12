@@ -7,6 +7,7 @@ using BookStore.ViewModels.Books;
 using Microsoft.AspNetCore.Mvc;
 using BookStore.Entity;
 using BookStore.DatabaseOperations.Services.Abstract;
+using System;
 
 namespace BookStore.Controllers
 {
@@ -49,6 +50,7 @@ namespace BookStore.Controllers
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] BookCreateViewModel model)
         {
+
             var data = await _service.AddAsync<BookGetViewModel>(_mapper.Map<Book>(model));
             return CreateActionResultInstance(data);
 

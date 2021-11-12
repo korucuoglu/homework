@@ -9,7 +9,6 @@ namespace BookStore.Shared
 
         [JsonIgnore]
         public int StatusCode { get; set; }
-        [JsonIgnore]
         public bool IsSuccessful { get; set; }
         public List<string> Errors { get; set; } // Static Factory Method 
 

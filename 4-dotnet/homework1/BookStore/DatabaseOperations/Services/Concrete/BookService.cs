@@ -35,5 +35,21 @@ namespace BookStore.DatabaseOperations.Services.Concrete
             var data = _mapper.Map<BookGetViewModel>(await _context.GetFirstOrDefaultWithGenresAsync(id));
             return Response<BookGetViewModel>.Success(data, 200);
         }
+
+        public override async Task<Response<T>> AddAsync<T>(Book entity) where T : class
+        {
+
+            var book = await _repository.SingleOrDefaultAsync(x => x.Title == entity.Title);
+            if (book != null)
+            {
+                return Response<T>.Fail("Kitap zaten mevcut", 500);
+            }
+
+            var data = _mapper.Map<T>(await _repository.AddAsync(entity));
+            return Response<T>.Success(data, 201);
+
+        }
+
+
     }
 }
