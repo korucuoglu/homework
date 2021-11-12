@@ -31,7 +31,7 @@ namespace BookStore
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddSingleton(typeof(ILoggerService), typeof(DbLogger));
+            services.AddSingleton(typeof(ILoggerService), typeof(ConsoleLogger));
 
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));

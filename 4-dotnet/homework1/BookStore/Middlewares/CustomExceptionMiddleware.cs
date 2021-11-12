@@ -29,6 +29,9 @@ namespace BookStore.Middlewares
             message = $"[Response] HTTP {context.Request.Method} - {context.Request.Path} responded {context.Response.StatusCode} in {watch.Elapsed.TotalMilliseconds} ms";
             _logger.Write(message);
 
+
+
+
         }
 
     }

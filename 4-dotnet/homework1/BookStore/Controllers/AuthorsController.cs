@@ -12,6 +12,7 @@ using BookStore.Filters;
 using BookStore.Models;
 using BookStore.ViewModels;
 using BookStore.Shared;
+using Microsoft.AspNetCore.Http;
 
 namespace BookStore.Controllers
 {
@@ -85,14 +86,20 @@ namespace BookStore.Controllers
         [ServiceFilter(typeof(ValidationFilter))]
         [HttpPost]
         [Route("books")]
-        public async Task<IActionResult> Add([FromBody] AuthorCreateViewModelWithBooks model)
+        public async Task<IActionResult> Add([FromBody] AuthorCreateViewModelWithBooks model, [FromForm] IFormFile file)
         {
+            if (file != null)
+            {
+                return Ok("dqdqd");
+            }
 
             await _bookService.AddRangeAsync<BookGetViewModel>(_mapper.Map<List<Book>>(model.Books));
 
             var data = await _service.AddAsync<AuthorGetViewModelWithBooks>(_mapper.Map<Author>(model));
 
-            return CreateActionResultInstance(data);
+            return Ok(file.FileName);
+
+            // return CreateActionResultInstance(data);
 
         }
 
