@@ -49,16 +49,6 @@ namespace WebApi.UnitTests.Application.Books
             var model = new BookCreateViewModel { Title = "ShouldBeReturn" };
 
 
-            // Act And Assert
-
-
-            // FluentActions
-            //   .Invoking(() => controller.Add(model).Result)
-            //   .Should()
-            //   .Throw<InvalidOperationException>().And.Message.Should().Be("Kitap zaten mevcut");
-
-
-
             // Act (Çalıştırma)
 
             var data = Assert.IsType<ObjectResult>(controller.Add(model).Result).Value;
@@ -73,8 +63,8 @@ namespace WebApi.UnitTests.Application.Books
 
 
         [Theory]
-        [InlineData(33)]
-        [InlineData(35)]
+        [InlineData()]
+        [InlineData()]
         [InlineData(38)]
         [InlineData(46)]
         public void WhenNotExistBookIdGiven_ResponseIsSucsessfullFalse_ShouldBeReturn(int id)
