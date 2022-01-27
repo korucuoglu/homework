@@ -1,12 +1,13 @@
 ﻿using System;
+using homework1.Dersler;
 
 namespace homework1
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            ders1.Run();
         }
     }
 }
