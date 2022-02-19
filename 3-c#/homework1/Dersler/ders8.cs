@@ -7,18 +7,13 @@ namespace homework1.Dersler
         public static void Run()
         {
 
-            for (int i = 0; i < 10; i++)
-            {
-                System.Console.WriteLine(i);
-            }
+            System.Console.WriteLine("Sayı Giriniz:");
+            int n = Convert.ToInt32(Console.ReadLine().Trim());
 
             for (int i = 1; i <= 10; i++)
             {
-                if (i % 2 == 0)
-                    continue;
-                Console.WriteLine(i);
+                System.Console.WriteLine($"Sayı: {n * i}");
             }
-
         }
     }
 }
