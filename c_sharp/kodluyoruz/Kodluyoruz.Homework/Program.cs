@@ -1,6 +1,6 @@
-﻿using Bootcamp.Homework.Homeworks.Week1;
+﻿using Kodluyoruz.Homework.Homeworks.Week1;
 
-namespace Bootcamp.Homework
+namespace Kodluyoruz.Homework
 {
     
     internal class Program
@@ -15,7 +15,7 @@ namespace Bootcamp.Homework
              
              */
 
-            Homework1.Run(); // Homework(x) ödevini çalıştırır. 
+            Homework3.Run(); // Homework(x) ödevini çalıştırır. 
 
         }
     }

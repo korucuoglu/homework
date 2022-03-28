@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Bootcamp.Homework.Homeworks.Week1
+namespace Kodluyoruz.Homework.Homeworks.Week1
 {
     public static class Homework3
     {
