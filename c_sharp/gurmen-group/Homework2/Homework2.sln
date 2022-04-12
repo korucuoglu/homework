@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Homework2.API", "Homework2.API\Homework2.API.csproj", "{67BBB448-296F-40A5-8FA9-18053BC33988}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Homework2.API", "Homework2.API\Homework2.API.csproj", "{67BBB448-296F-40A5-8FA9-18053BC33988}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Homework2.Observer", "Homework2.Observer\Homework2.Observer.csproj", "{7C4B949C-8D0C-418B-AB09-09D1D85E7215}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Homework2.AspectOrianted", "Homework2.AspectOrianted\Homework2.AspectOrianted.csproj", "{E0C197DC-3BC5-4EE3-B640-4FBCB95CD3F6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{67BBB448-296F-40A5-8FA9-18053BC33988}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{67BBB448-296F-40A5-8FA9-18053BC33988}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{67BBB448-296F-40A5-8FA9-18053BC33988}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C4B949C-8D0C-418B-AB09-09D1D85E7215}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C4B949C-8D0C-418B-AB09-09D1D85E7215}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C4B949C-8D0C-418B-AB09-09D1D85E7215}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C4B949C-8D0C-418B-AB09-09D1D85E7215}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0C197DC-3BC5-4EE3-B640-4FBCB95CD3F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0C197DC-3BC5-4EE3-B640-4FBCB95CD3F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0C197DC-3BC5-4EE3-B640-4FBCB95CD3F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0C197DC-3BC5-4EE3-B640-4FBCB95CD3F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
