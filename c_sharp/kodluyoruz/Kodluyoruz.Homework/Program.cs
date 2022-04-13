@@ -1,5 +1,4 @@
-﻿using Kodluyoruz.Homework.Homeworks.Week1;
-
+﻿
 namespace Kodluyoruz.Homework
 {
     
@@ -9,13 +8,13 @@ namespace Kodluyoruz.Homework
         {
             /*
              * İstenilen ödevi buradan çalıştırmanız gerekmektedir. 
-             * Örnek olarak Homework1 ödevini çalıştırmak istiyorsanız tek yapmanız gereken
-             *      - Homework1.Run() demek olacaktır. 
+             * Örnek olarak birinci haftanın ikinci ödevini çalıştırmak istiyorsanız tek yapmanız gereken
+             *      - Homeworks.Week1.Homework1.Run(); demek olacaktır. 
              * Bu sayede tek bir Console projesi içerisinde tüm ödevler yer alacak Bu da bize alandan ve zamandan tasarruf sağlayacaktır. 
              
              */
 
-            Homework3.Run(); // Homework(x) ödevini çalıştırır. 
+            Homeworks.Week2.Homework2.Run();
 
         }
     }
