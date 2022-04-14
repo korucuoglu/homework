@@ -7,7 +7,7 @@ namespace homework1
     {
         static void Main(string[] args)
         {
-            Homeworks.homework1.Run();
+            patika.Homeworks.Homework4.Program.Run();
         }
     }
 }
