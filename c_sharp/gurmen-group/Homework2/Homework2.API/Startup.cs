@@ -1,7 +1,6 @@
 using Homework2.API.Filters;
 using Homework2.API.Middlewares;
 using Homework2.API.Repositories;
-using Homework2.API.Services;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -43,7 +42,6 @@ namespace Homework2.API
             services.AddScoped<IDbConnection>(sp => new NpgsqlConnection(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<IAuthorRepository, AuthorRepository>();
-            services.AddScoped<IAuthorService, AuthorService>();
             services.AddScoped(typeof(NotFoundFilter));
         }
 

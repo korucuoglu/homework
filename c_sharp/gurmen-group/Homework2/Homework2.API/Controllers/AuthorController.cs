@@ -1,6 +1,7 @@
-﻿using Homework2.API.Dtos.Author;
+﻿using Homework2.API.Features.Command.Authors;
+using Homework2.API.Features.Queries.Authors;
 using Homework2.API.Filters;
-using Homework2.API.Services;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -10,18 +11,17 @@ namespace Homework2.API.Controllers
     [ApiController]
     public class AuthorController : BaseApiController
     {
-        private readonly IAuthorService _service;
+        private readonly IMediator _mediator;
 
-        public AuthorController(IAuthorService service)
+        public AuthorController(IMediator mediator)
         {
-            _service = service;
+            _mediator = mediator;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var data = await  _service.GetAll();
-
+            var data = await _mediator.Send(new AuthorGetAllQuery());
             return Result(data);
         }
 
@@ -29,15 +29,22 @@ namespace Homework2.API.Controllers
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var data = await _service.GetById(id);
+            var data = await _mediator.Send(new AuthorGetByIdQuery() { Id = id });
 
             return Result(data);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Save(AddAuthorDto model)
+        [HttpGet("books/{id:int}")]
+        public async Task<IActionResult> GetAuthorByIdWithBook(int id)
         {
-            var data = await _service.Save(model);
+            var data = await _mediator.Send(new AuthorGetByIdWithBookQuery() { Id = id });
+            return Result(data);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Save(AddAuthorCommand model)
+        {
+            var data = await _mediator.Send(model);
 
             return Result(data);
         }
@@ -46,18 +53,18 @@ namespace Homework2.API.Controllers
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var data = await _service.Delete(id);
+            var data = await _mediator.Send(new DeleteAuthorCommand() { AuthorId = id });
 
             return Result(data);
         }
 
         [ServiceFilter(typeof(NotFoundFilter))]
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> Update(int id, UpdateAuthorDto model)
+        public async Task<IActionResult> Update(int id, UpdateAuthorCommand model)
         {
             model.Id = id;
 
-            var data = await _service.Update(model);
+            var data = await _mediator.Send(model);
 
             return Result(data);
         }

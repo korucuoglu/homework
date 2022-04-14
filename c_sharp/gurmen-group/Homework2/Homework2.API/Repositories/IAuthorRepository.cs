@@ -1,19 +1,13 @@
-﻿using Homework2.API.Models;
+﻿using Homework2.API.Dtos.Author;
+using Homework2.API.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Homework2.API.Repositories
 {
-    public interface IAuthorRepository
+    public interface IAuthorRepository: IRepository<Author>
     {
-        Task<List<Author>> GetAll();
-        Task<Author> GetById(int id);
-
-        Task<int> Save(Author model);
-
-        Task<bool> Update(Author model);
-
-        Task<bool> Delete(int id);
-        Task<bool> Any(int id);
+        public Task<IEnumerable<AuthorBook>> GetAuthorByIdWithBook(int id);
+        
     }
 }

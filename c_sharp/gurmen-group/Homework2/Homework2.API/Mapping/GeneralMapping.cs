@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Homework2.API.Dtos.Author;
+using Homework2.API.Features.Command.Authors;
 using Homework2.API.Models;
 
 namespace Homework2.API.Mapping
@@ -10,8 +11,8 @@ namespace Homework2.API.Mapping
         {
             CreateMap<Author, AuthorDto>();
 
-            CreateMap<AddAuthorDto, Author>();
-            CreateMap<UpdateAuthorDto, Author>();
+            CreateMap<AddAuthorCommand, Author>();
+            CreateMap<UpdateAuthorCommand, Author>();
         }
 
     }
