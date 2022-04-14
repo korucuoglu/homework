@@ -7,7 +7,7 @@ namespace homework1
     {
         static void Main(string[] args)
         {
-            ders12.Run();
+            Homeworks.homework1.Run();
         }
     }
 }
