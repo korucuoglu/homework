@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Homework2.API.Features.Queries.Authors
 {
-    public class AuthorGetAllQuery: IRequest<Response<List<AuthorDto>>>
+    public class AuthorGetAllQuery : IRequest<Response<List<AuthorDto>>>
     {
     }
 
@@ -27,7 +27,7 @@ namespace Homework2.API.Features.Queries.Authors
 
         public async Task<Response<List<AuthorDto>>> Handle(AuthorGetAllQuery request, CancellationToken cancellationToken)
         {
-            var data =  await _authorRepository.GetAll();
+            var data = await _authorRepository.GetAll();
 
             var dto = _mapper.Map<List<AuthorDto>>(data);
 

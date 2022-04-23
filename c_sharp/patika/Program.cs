@@ -9,5 +9,17 @@ namespace homework1
         {
             patika.Homeworks.Homework4.Program.Run();
         }
+
+        public static bool SimpleEvens(int num)
+        {
+            for (int i = 0; i < num.ToString().Length; i++)
+            {
+
+            }
+
+
+
+            return true;
+        }
     }
 }

@@ -49,7 +49,6 @@ namespace Homework2.API.Repositories
         public async Task<bool> Update(Author model)
         {
             var command = "CALL update_author (@Name, @Id)";
-            // var command = "UPDATE author SET name=@name WHERE id=@id";
             return await _connection.ExecuteAsync(command, model) > 0;
         }
 

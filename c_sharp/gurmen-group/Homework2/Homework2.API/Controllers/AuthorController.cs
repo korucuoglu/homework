@@ -34,11 +34,13 @@ namespace Homework2.API.Controllers
             return Result(data);
         }
 
+        [ServiceFilter(typeof(NotFoundFilter))]
         [HttpGet("books/{id:int}")]
         public async Task<IActionResult> GetAuthorByIdWithBook(int id)
         {
             var data = await _mediator.Send(new AuthorGetByIdWithBookQuery() { Id = id });
             return Result(data);
+          
         }
 
         [HttpPost]
