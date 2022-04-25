@@ -4,26 +4,12 @@
     <div class="container">
       <div class="course--planner-app--container">
         <div class="card">
-          <AddSection />
+          <AddSection @add-course="addCourse" />
         </div>
-        <div class="card card-light mt-20">
-          <h3>Aktif Kurslarım</h3>
-          <ul class="list mt-20">
-            <li
-              class="course-item list-item"
-              :class="course.completed ? 'bg-success' : 'bg-danger'"
-              v-for="course in courses"
-              :key="course"
-            >
-              <span> {{ course.title }}</span>
-              <input type="checkbox" v-model="course.completed" />
-            </li>
-          </ul>
-        </div>
+        <CourseList :courses="courses" />
+
         <div class="mt-10">
-          <small>İzlenecek {{ getUnompletedCourse }} adet kursunuz var.</small>
-          <br />
-          <small>İzlediğiniz {{ getCompletedCourse }} adet kursunuz var.</small>
+          <ResultBar />
         </div>
       </div>
     </div>
@@ -32,16 +18,28 @@
 
 <script>
 import AddSection from './components/AddSection.vue'
+import CourseList from './components/CourseList.vue'
+import ResultBar from './components/ResultBar.vue'
 
 export default {
   components: {
     AddSection,
+    CourseList,
+    ResultBar,
   },
+
+  provide() {
+    return {
+      getCompletedCourse: this.getCompletedCourse,
+      getUncompletedCourse: this.getUncompletedCourse,
+    }
+  },
+
   data() {
     return {
       title: '',
       courses: [
-        { title: 'Vue.js', completed: false },
+        { title: 'Vue.js', completed: true },
         { title: 'React.js', completed: false },
       ],
     }
@@ -56,7 +54,7 @@ export default {
     getCompletedCourse() {
       return this.courses.filter((x) => x.completed == true).length
     },
-    getUnompletedCourse() {
+    getUncompletedCourse() {
       return this.courses.filter((x) => x.completed == false).length
     },
   },

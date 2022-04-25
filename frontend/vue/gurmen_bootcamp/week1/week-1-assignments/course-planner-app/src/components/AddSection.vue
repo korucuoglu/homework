@@ -5,10 +5,12 @@
       <input
         type="text"
         v-model="title"
-        @keydown.enter="addCourse($event.target.value)"
+        @keydown.enter="$emit('add-course', title)"
       />
     </div>
-    <button class="btn-primary" @click="addCourse(title)">Kurs Ekle</button>
+    <button class="btn-primary" @click="$emit('add-course', title)">
+      Kurs Ekle
+    </button>
   </div>
 </template>
 
