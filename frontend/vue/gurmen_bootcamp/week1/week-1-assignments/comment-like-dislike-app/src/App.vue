@@ -1,30 +1,16 @@
 <template>
   <header>Comment Like/Dislike App</header>
   <div class="container">
-    <div class="comment--like--dislike--app">
-      <div
-        class="card mb-10 comment--item"
-        v-for="comment in comments"
-        :key="comment"
-      >
-        <p>
-          {{ comment.text }}
-        </p>
-        <div class="action--button--container text-right mt-10">
-          <button class="btn-sm btn-success" @click="comment.like++">
-            Beğendim ({{ comment.like }})
-          </button>
-          <button class="btn-sm btn-danger" @click="comment.dislike++">
-            Beğenmedim ({{ comment.dislike }})
-          </button>
-        </div>
-      </div>
-    </div>
+    <CommentList :items="comments" />
   </div>
 </template>
 
 <script>
+import CommentList from './components/CommentList.vue'
 export default {
+  components: {
+    CommentList,
+  },
   data() {
     return {
       comments: [
