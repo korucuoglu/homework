@@ -4,19 +4,7 @@
     <div class="container">
       <div class="course--planner-app--container">
         <div class="card">
-          <div class="user--action--container">
-            <div class="form-group">
-              <label>Kursun Adı</label>
-              <input
-                type="text"
-                v-model="title"
-                @keydown.enter="addCourse($event.target.value)"
-              />
-            </div>
-            <button class="btn-primary" @click="addCourse(title)">
-              Kurs Ekle
-            </button>
-          </div>
+          <AddSection />
         </div>
         <div class="card card-light mt-20">
           <h3>Aktif Kurslarım</h3>
@@ -43,7 +31,12 @@
 </template>
 
 <script>
+import AddSection from './components/AddSection.vue'
+
 export default {
+  components: {
+    AddSection,
+  },
   data() {
     return {
       title: '',
