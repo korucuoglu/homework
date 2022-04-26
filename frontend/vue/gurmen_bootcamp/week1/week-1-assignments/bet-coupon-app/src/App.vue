@@ -107,10 +107,11 @@ export default {
 
     getTotalRate() {
       if (this.provideData.cupon.matches.length > 0) {
-        var mapperData = this.provideData.cupon.matches.map((x) => x.rate)
-        return mapperData.reduce((pre, next) => pre * next)
+        var number = this.provideData.cupon.matches
+          .map((x) => x.rate)
+          .reduce((pre, next) => pre * next)
+        return (Math.round(number * 100) / 100).toFixed(2)
       }
-
       return 0
     },
   },
