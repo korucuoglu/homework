@@ -44,7 +44,7 @@
         </div>
       </div>
       <!-- Kuponum -->
-      <div class="coupon--total--container">
+      <div class="coupon--total--container" v-show="cupon.matches.length > 0">
         <div class="card my-coupon">
           <div class="card--header">
             <h4>Kuponum</h4>
@@ -52,7 +52,7 @@
           <div class="card--body">
             <div
               class="coupon-item"
-              v-for="cupon in GetCuponDetails"
+              v-for="cupon in cupon.matches"
               :key="cupon.id"
             >
               <div
@@ -80,32 +80,31 @@
           <div
             class="multiply--buttons mb-10 d-flex justify-content-center align-items-center"
           >
-            <button class="btn-sm">5</button>
-            <button class="btn-sm">10</button>
-            <button class="btn-sm">20</button>
-            <button class="btn-sm">30</button>
-            <button class="btn-sm">50</button>
-            <button class="btn-sm">100</button>
-            <button class="btn-sm">200</button>
-            <button class="btn-sm">500</button>
-            <button class="btn-sm">1000</button>
-            <button class="btn-sm">1500</button>
-            <button class="btn-sm">2500</button>
+            <button
+              class="btn-sm"
+              v-for="item in betAmountList"
+              :key="item"
+              @click="cupon.betAmount = item"
+            >
+              {{ item }}
+            </button>
           </div>
           <div class="coupon--total--container mt-20">
             <div
               class="d-flex justify-content-between align-items-center font-weight-bold"
             >
               <span>Toplam Oran</span>
-              <span class="text-info">{{ getTotalRate }}</span>
+              <span class="text-info">{{ cupon.totalRate.toFixed(2) }}</span>
             </div>
             <div class="d-flex justify-content-between align-items-center mt-5">
               <span>Kupon Tutarı</span>
-              <span class="font-weight-bold">10,00 TL</span>
+              <span class="font-weight-bold"
+                >{{ cupon.betAmount.toFixed(2) }} TL</span
+              >
             </div>
             <div class="d-flex justify-content-between align-items-center mt-5">
               <span>Tahmini Kazanç</span>
-              <span class="font-weight-bold text-info">450,00 TL</span>
+              <span class="font-weight-bold text-info">{{ totalWin }} TL</span>
             </div>
           </div>
         </div>
@@ -142,13 +141,37 @@ export default {
           },
         },
       ],
-      cupons: [{ id: '100', matchId: 1, bet: 'home' }],
+      betAmountList: [5, 10, 20, 30, 50, 100, 200, 500, 1000, 1500, 2500],
+
+      cupon: {
+        totalRate: 1.5,
+        betAmount: 10,
+        matches: [],
+      },
     }
   },
 
   methods: {
     addBet(id, bet) {
-      this.cupons.push({ id: new Date().getTime(), matchId: id, bet: bet })
+      var match = this.matctList.find((x) => x.id === id)
+      var newCupon = {
+        matchId: match.id,
+        bet: bet,
+        clock: match.clock,
+        result: bet === 'home' ? 1 : bet === 'away' ? 2 : 0,
+        team: `${match.home} x ${match.away}`,
+        rate:
+          bet === 'home'
+            ? match.rates.home.toFixed(2)
+            : bet === 'away'
+            ? match.rates.away.toFixed(2)
+            : match.rates.draw.toFixed(2),
+      }
+
+      this.cupon.totalRate *= newCupon.rate
+      this.cupon.totalWin = this.cupon.totalRate * this.cupon.betAmount
+
+      this.cupon.matches.push(newCupon)
     },
     removeBet(id) {
       this.cupons = this.cupons.filter((x) => x.matchId !== id)
@@ -156,29 +179,8 @@ export default {
   },
 
   computed: {
-    GetCuponDetails() {
-      var result = this.cupons.map((cupon) => {
-        var match = this.matctList.find((x) => x.id === cupon.matchId)
-        return {
-          id: cupon.id,
-          matchId: match.id,
-          clock: match.clock,
-          team: `${match.home} x ${match.away}`,
-          result: cupon.bet === 'home' ? 1 : cupon.bet === 'away' ? 2 : 0,
-          rate:
-            cupon.bet === 'home'
-              ? match.rates.home
-              : cupon.bet === 'away'
-              ? match.rates.away
-              : match.rates.draw,
-        }
-      })
-      return result
-    },
-
-    getTotalRate() {
-      var rates = this.GetCuponDetails.map((x) => x.rate)
-      return rates.reduce((sum, current) => sum * current).toFixed(2)
+    totalWin() {
+      return (this.cupon.totalRate * this.cupon.betAmount).toFixed(2)
     },
   },
 }
