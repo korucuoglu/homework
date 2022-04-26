@@ -12,17 +12,17 @@
       <div class="rates">
         <div class="rate-item">
           <button class="btn-sm" @click="addBet(match.id, 'home')">
-            {{ match.rates.home.toFixed(2) }}
+            {{ match.rates.home }}
           </button>
         </div>
         <div class="rate-item">
           <button class="btn-sm" @click="addBet(match.id, 'draw')">
-            {{ match.rates.draw.toFixed(2) }}
+            {{ match.rates.draw }}
           </button>
         </div>
         <div class="rate-item">
           <button class="btn-sm" @click="addBet(match.id, 'away')">
-            {{ match.rates.away.toFixed(2) }}
+            {{ match.rates.away }}
           </button>
         </div>
       </div>

@@ -20,60 +20,63 @@
 <script>
 import MatcList from './components/MatchList.vue'
 import Cupon from './components/Cupon.vue'
+import axios from 'axios'
 export default {
   components: {
     MatcList,
     Cupon,
   },
+
   provide() {
     return {
       betAmountList: this.provideData.betAmountList,
       addBet: this.addBet,
       cupon: this.provideData.cupon,
-      $totalWin: () => this.totalWin,
+      $getTotalWin: () => this.getTotalWin,
+      $getTotalRate: () => this.getTotalRate,
     }
   },
   data() {
     return {
       provideData: {
-        matctList: [
-          {
-            id: 1,
-            home: 'Galatasaray',
-            away: 'Fenerbahçe',
-            clock: '19:00',
-            rates: {
-              home: 1.5,
-              draw: 3.2,
-              away: 2.8,
-            },
-          },
-          {
-            id: 2,
-            home: 'Başakşehir',
-            away: 'Beşiktaş',
-            clock: '21:00',
-            rates: {
-              home: 2.8,
-              draw: 3.1,
-              away: 2.1,
-            },
-          },
-        ],
-
+        matctList: [],
         betAmountList: [5, 10, 20, 30, 50, 100, 200, 500, 1000, 1500, 2500],
-
         cupon: {
-          totalRate: 1.5,
-          betAmount: 10,
+          betAmount: 5,
           matches: [],
         },
       },
     }
   },
 
+  mounted() {
+    axios.get('http://localhost:3000/data').then((response) => {
+      this.provideData.matctList = response.data.map((match) => {
+        return {
+          id: match.MatchID,
+          home: match.takim1,
+          away: match.takim2,
+          clock: match.Saat,
+          rates: {
+            home: match.ms1,
+            draw: match.ms0,
+            away: match.ms2,
+          },
+        }
+      })
+
+      console.log(response.data)
+    })
+  },
+
   methods: {
     addBet(id, bet) {
+      if (this.provideData.cupon.matches.some((x) => x.matchId === id)) {
+        this.provideData.cupon.matches = this.provideData.cupon.matches.filter(
+          (x) => x.matchId !== id
+        )
+      }
+
       var match = this.provideData.matctList.find((x) => x.id === id)
       var newCupon = {
         matchId: match.id,
@@ -88,25 +91,27 @@ export default {
             ? match.rates.away.toFixed(2)
             : match.rates.draw.toFixed(2),
       }
-
-      this.provideData.cupon.totalRate *= newCupon.rate
-      this.provideData.cupon.totalWin =
-        this.provideData.cupon.totalRate * this.provideData.cupon.betAmount
-
       this.provideData.cupon.matches.push(newCupon)
     },
     removeBet(id) {
-      this.provideData.cupons = this.provideData.cupons.filter(
-        (x) => x.matchId !== id
+      this.provideData.cupon = this.provideData.cupon.matches.filter(
+        (x) => x.id !== id
       )
     },
   },
 
   computed: {
-    totalWin() {
-      return (
-        this.provideData.cupon.totalRate * this.provideData.cupon.betAmount
-      ).toFixed(2)
+    getTotalWin() {
+      return (this.getTotalRate * this.provideData.cupon.betAmount).toFixed(2)
+    },
+
+    getTotalRate() {
+      if (this.provideData.cupon.matches.length > 0) {
+        var mapperData = this.provideData.cupon.matches.map((x) => x.rate)
+        return mapperData.reduce((pre, next) => pre * next)
+      }
+
+      return 0
     },
   },
 }

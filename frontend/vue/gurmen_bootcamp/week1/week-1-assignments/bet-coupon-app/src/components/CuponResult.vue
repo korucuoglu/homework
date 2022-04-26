@@ -18,7 +18,7 @@
         class="d-flex justify-content-between align-items-center font-weight-bold"
       >
         <span>Toplam Oran</span>
-        <span class="text-info">{{ cupon.totalRate.toFixed(2) }}</span>
+        <span class="text-info">{{ getTotalRate }}</span>
       </div>
       <div class="d-flex justify-content-between align-items-center mt-5">
         <span>Kupon Tutarı</span>
@@ -26,7 +26,7 @@
       </div>
       <div class="d-flex justify-content-between align-items-center mt-5">
         <span>Tahmini Kazanç</span>
-        <span class="font-weight-bold text-info">{{ totalWin }} TL</span>
+        <span class="font-weight-bold text-info">{{ getTotalWin }} TL</span>
       </div>
     </div>
   </div>
@@ -34,10 +34,13 @@
 
 <script>
 export default {
-  inject: ['betAmountList', 'cupon', '$totalWin'],
+  inject: ['betAmountList', 'cupon', '$getTotalWin', '$getTotalRate'],
   computed: {
-    totalWin() {
-      return this.$totalWin()
+    getTotalWin() {
+      return this.$getTotalWin()
+    },
+    getTotalRate() {
+      return this.$getTotalRate()
     },
   },
 }
