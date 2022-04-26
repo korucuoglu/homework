@@ -66,16 +66,7 @@ export default {
         cupon: {
           totalRate: 1.5,
           betAmount: 10,
-          matches: [
-            {
-              matchId: 1,
-              bet: 'bet',
-              clock: '19.00',
-              result: 1,
-              team: 'Galatasaray x Fenerbahçe',
-              rate: 1.5,
-            },
-          ],
+          matches: [],
         },
       },
     }
