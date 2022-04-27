@@ -32,6 +32,7 @@
 
 <script>
 export default {
+  components: {},
   props: ['match'],
   inject: ['addBet'],
 }
