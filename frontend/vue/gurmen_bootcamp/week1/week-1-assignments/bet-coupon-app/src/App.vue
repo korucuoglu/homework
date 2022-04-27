@@ -20,7 +20,7 @@
 <script>
 import MatcList from './components/MatchList.vue'
 import Cupon from './components/Cupon.vue'
-import axios from 'axios'
+import matchService from './services/match'
 export default {
   components: {
     MatcList,
@@ -49,35 +49,20 @@ export default {
     }
   },
 
-  mounted() {
-    axios.get('http://localhost:3000/data').then((response) => {
-      this.provideData.matctList = response.data.map((match) => {
-        return {
-          id: match.MatchID,
-          home: match.takim1,
-          away: match.takim2,
-          clock: match.Saat,
-          rates: {
-            home: match.ms1,
-            draw: match.ms0,
-            away: match.ms2,
-          },
-        }
-      })
-
-      console.log(response.data)
-    })
+  async mounted() {
+    this.provideData.matctList = await matchService.getAll()
   },
 
   methods: {
-    addBet(id, bet) {
+    async addBet(id, bet) {
       if (this.provideData.cupon.matches.some((x) => x.matchId === id)) {
         this.provideData.cupon.matches = this.provideData.cupon.matches.filter(
           (x) => x.matchId !== id
         )
       }
 
-      var match = this.provideData.matctList.find((x) => x.id === id)
+      // var match = this.provideData.matctList.find((x) => x.id === id)
+      var match = await matchService.getById(id)
       var newCupon = {
         matchId: match.id,
         bet: bet,
@@ -86,10 +71,10 @@ export default {
         team: `${match.home} x ${match.away}`,
         rate:
           bet === 'home'
-            ? match.rates.home.toFixed(2)
+            ? match.rates.home
             : bet === 'away'
-            ? match.rates.away.toFixed(2)
-            : match.rates.draw.toFixed(2),
+            ? match.rates.away
+            : match.rates.draw,
       }
       this.provideData.cupon.matches.push(newCupon)
     },
