@@ -30,10 +30,12 @@ export default {
   provide() {
     return {
       betAmountList: this.provideData.betAmountList,
+      getMatchList: this.getMatchList,
       addBet: this.addBet,
       cupon: this.provideData.cupon,
       $getTotalWin: () => this.getTotalWin,
       $getTotalRate: () => this.getTotalRate,
+      pageData: this.provideData.pageData,
     }
   },
   data() {
@@ -45,12 +47,16 @@ export default {
           betAmount: 5,
           matches: [],
         },
+        pageData: {
+          currentPage: 1,
+          endPage: 8,
+        },
       },
     }
   },
 
   async mounted() {
-    this.provideData.matchList = await matchService.getAll()
+    await this.getMatchList(1)
   },
 
   methods: {
@@ -81,6 +87,10 @@ export default {
       this.provideData.cupon.matches = this.provideData.cupon.matches.filter(
         (x) => x.id !== id
       )
+    },
+    async getMatchList(page) {
+      this.provideData.pageData.currentPage = page
+      this.provideData.matchList = await matchService.getAll(page)
     },
   },
 

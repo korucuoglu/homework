@@ -1,11 +1,10 @@
 import { http } from '../utils/http'
 
 const MatchService = {
-  async getAll() {
+  async getAll(page) {
     var result = await http.get('data')
-    return this.mappingData(result.data.slice(1, 10))
+    return this.mappingData(result.data.slice((page - 1) * 10, page * 10))
   },
-
   async getById(id) {
     var match = await (await http.get(`data/${id}`)).data
     return {

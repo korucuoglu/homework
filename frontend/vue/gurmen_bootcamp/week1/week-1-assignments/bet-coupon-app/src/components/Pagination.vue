@@ -1,18 +1,23 @@
 <template>
   <div class="pagination">
-    <a href="#">&laquo;</a>
-    <a href="#">1</a>
-    <a href="#" class="active">2</a>
-    <a href="#">3</a>
-    <a href="#">4</a>
-    <a href="#">5</a>
-    <a href="#">6</a>
-    <a href="#">&raquo;</a>
+    <button @click="pageData.currentPage--">&laquo;</button>
+    <button
+      :class="{ active: number == pageData.currentPage }"
+      v-for="number in pageData.endPage"
+      :key="number"
+      @click="getMatchList(number)"
+    >
+      {{ number }}
+    </button>
+
+    <button @click="pageData.currentPage++">&raquo;</button>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  inject: ['pageData', 'getMatchList'],
+}
 </script>
 
 <style>
@@ -23,7 +28,7 @@ export default {}
   align-items: center;
 }
 
-.pagination a {
+.pagination button {
   color: black;
   float: left;
   padding: 8px 16px;
@@ -31,12 +36,12 @@ export default {}
   transition: background-color 0.3s;
 }
 
-.pagination a.active {
+.pagination button.active {
   background-color: #4caf50;
   color: white;
 }
 
-.pagination a:hover:not(.active) {
+.pagination button:hover:not(.active) {
   background-color: #ddd;
 }
 </style>
