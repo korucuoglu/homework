@@ -34,13 +34,20 @@
 
 <script>
 export default {
-  inject: ['betAmountList', 'cupon', '$getTotalWin', '$getTotalRate'],
+  inject: ['betAmountList', 'cupon'],
   computed: {
     getTotalWin() {
-      return this.$getTotalWin()
+      return (this.getTotalRate * this.cupon.betAmount).toFixed(2)
     },
+
     getTotalRate() {
-      return this.$getTotalRate()
+      if (this.cupon.matches.length > 0) {
+        var number = this.cupon.matches
+          .map((x) => x.rate)
+          .reduce((pre, next) => pre * next)
+        return (Math.round(number * 100) / 100).toFixed(2)
+      }
+      return 0
     },
   },
 }

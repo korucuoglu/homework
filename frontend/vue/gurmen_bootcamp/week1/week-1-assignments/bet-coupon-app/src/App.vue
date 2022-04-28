@@ -33,8 +33,6 @@ export default {
       getMatchList: this.getMatchList,
       addBet: this.addBet,
       cupon: this.provideData.cupon,
-      $getTotalWin: () => this.getTotalWin,
-      $getTotalRate: () => this.getTotalRate,
       pageData: this.provideData.pageData,
     }
   },
@@ -91,22 +89,6 @@ export default {
     async getMatchList(page) {
       this.provideData.pageData.currentPage = page
       this.provideData.matchList = await matchService.getAll(page)
-    },
-  },
-
-  computed: {
-    getTotalWin() {
-      return (this.getTotalRate * this.provideData.cupon.betAmount).toFixed(2)
-    },
-
-    getTotalRate() {
-      if (this.provideData.cupon.matches.length > 0) {
-        var number = this.provideData.cupon.matches
-          .map((x) => x.rate)
-          .reduce((pre, next) => pre * next)
-        return (Math.round(number * 100) / 100).toFixed(2)
-      }
-      return 0
     },
   },
 }
