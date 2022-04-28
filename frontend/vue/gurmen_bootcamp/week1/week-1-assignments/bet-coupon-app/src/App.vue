@@ -5,7 +5,7 @@
       class="bet--coupon--app d-flex justify-content-between align-items-start"
     >
       <!-- Mac Listesi-->
-      <MatcList :matchList="provideData.matchList" />
+      <MatcList />
       <!-- Kuponum -->
       <div
         class="coupon--total--container"
@@ -30,7 +30,6 @@ export default {
   provide() {
     return {
       betAmountList: this.provideData.betAmountList,
-      getMatchList: this.getMatchList,
       addBet: this.addBet,
       cupon: this.provideData.cupon,
       pageData: this.provideData.pageData,
@@ -39,7 +38,6 @@ export default {
   data() {
     return {
       provideData: {
-        matchList: [],
         betAmountList: [5, 10, 20, 30, 50, 100, 200, 500, 1000, 1500, 2500],
         cupon: {
           betAmount: 5,
@@ -53,17 +51,10 @@ export default {
     }
   },
 
-  async mounted() {
-    await this.getMatchList(1)
-  },
-
   methods: {
     async addBet(id, bet) {
       if (this.provideData.cupon.matches.some((x) => x.matchId === id)) {
         return
-        // this.provideData.cupon.matches = this.provideData.cupon.matches.filter(
-        //   (x) => x.matchId !== id
-        // )
       }
       var match = await matchService.getById(id)
       var newCupon = {
@@ -85,10 +76,6 @@ export default {
       this.provideData.cupon.matches = this.provideData.cupon.matches.filter(
         (x) => x.id !== id
       )
-    },
-    async getMatchList(page) {
-      this.provideData.pageData.currentPage = page
-      this.provideData.matchList = await matchService.getAll(page)
     },
   },
 }

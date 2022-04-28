@@ -4,11 +4,12 @@
       <h4>Yakın Zamanda Başlayacak Müsabakalar</h4>
     </div>
     <MatchListItem v-for="match in matchList" :key="match" :match="match" />
-    <Pagination />
+    <Pagination @changed-page="getMatchList($event)" />
   </div>
 </template>
 
 <script>
+import matchService from '../services/match'
 import MatchListItem from './MatchListItem.vue'
 import Pagination from './Pagination.vue'
 export default {
@@ -16,6 +17,21 @@ export default {
     MatchListItem,
     Pagination,
   },
-  props: ['matchList'],
+
+  data() {
+    return {
+      matchList: [],
+    }
+  },
+
+  async mounted() {
+    await this.getMatchList(1)
+  },
+
+  methods: {
+    async getMatchList(page) {
+      this.matchList = await matchService.getAll(page)
+    },
+  },
 }
 </script>

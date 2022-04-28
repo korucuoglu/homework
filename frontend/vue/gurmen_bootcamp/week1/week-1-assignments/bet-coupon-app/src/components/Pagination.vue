@@ -1,22 +1,33 @@
 <template>
   <div class="pagination">
-    <button @click="pageData.currentPage--">&laquo;</button>
+    <button @click="currentPage--">&laquo;</button>
     <button
-      :class="{ active: number == pageData.currentPage }"
-      v-for="number in pageData.endPage"
+      :class="{ active: number == currentPage }"
+      v-for="number in endPage"
       :key="number"
-      @click="getMatchList(number)"
+      @click="currentPage = number"
     >
       {{ number }}
     </button>
 
-    <button @click="pageData.currentPage++">&raquo;</button>
+    <button @click="currentPage++">&raquo;</button>
   </div>
 </template>
 
 <script>
 export default {
-  inject: ['pageData', 'getMatchList'],
+  inject: ['pageData'],
+  data() {
+    return {
+      currentPage: this.pageData.currentPage,
+      endPage: this.pageData.endPage,
+    }
+  },
+  watch: {
+    currentPage(n) {
+      this.$emit('changed-page', n)
+    },
+  },
 }
 </script>
 
