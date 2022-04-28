@@ -8,7 +8,7 @@
         class="btn-sm"
         v-for="amount in betAmountList"
         :key="amount"
-        @click="betAmount = amount"
+        @click="changeAmount(amount)"
       >
         {{ amount }}
       </button>
@@ -22,7 +22,7 @@
       </div>
       <div class="d-flex justify-content-between align-items-center mt-5">
         <span>Kupon Tutarı</span>
-        <span class="font-weight-bold">{{ cupon.betAmount }} TL</span>
+        <span class="font-weight-bold">{{ _betAmount }} TL</span>
       </div>
       <div class="d-flex justify-content-between align-items-center mt-5">
         <span>Tahmini Kazanç</span>
@@ -33,23 +33,29 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
-  props: ['cupon'],
   data() {
     return {
       betAmountList: [5, 10, 20, 30, 50, 100, 200, 500, 1000, 1500, 2500],
-      betAmount: this.cupon.betAmount,
     }
   },
 
+  methods: {
+    changeAmount(number) {
+      this.$store.commit('changeBetAmount', number)
+    },
+  },
+
   computed: {
+    ...mapGetters(['_betAmount', '_matches']),
     getTotalWin() {
-      return (this.getTotalRate * this.cupon.betAmount).toFixed(2)
+      return (this.getTotalRate * this._betAmount).toFixed(2)
     },
 
     getTotalRate() {
-      if (this.cupon.matches.length > 0) {
-        var number = this.cupon.matches
+      if (this._matches.length > 0) {
+        var number = this._matches
           .map((x) => x.rate)
           .reduce((pre, next) => pre * next)
         return (Math.round(number * 100) / 100).toFixed(2)

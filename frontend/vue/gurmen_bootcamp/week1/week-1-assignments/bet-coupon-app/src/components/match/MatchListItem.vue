@@ -31,9 +31,28 @@
 </template>
 
 <script>
+import matchService from '../../services/match'
 export default {
   components: {},
   props: ['match'],
-  inject: ['addBet'],
+
+  methods: {
+    async addBet(id, bet) {
+      var match = await matchService.getById(id)
+      var matchFromCupon = {
+        matchId: match.id,
+        bet: bet,
+        clock: match.clock,
+        team: `${match.home} x ${match.away}`,
+        rate:
+          bet === 'home'
+            ? match.rates.home
+            : bet === 'away'
+            ? match.rates.away
+            : match.rates.draw,
+      }
+      this.$store.commit('addMatchtoCupon', matchFromCupon)
+    },
+  },
 }
 </script>
