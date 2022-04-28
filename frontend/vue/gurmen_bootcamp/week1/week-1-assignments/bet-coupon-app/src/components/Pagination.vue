@@ -16,11 +16,10 @@
 
 <script>
 export default {
-  inject: ['pageData'],
   data() {
     return {
-      currentPage: this.pageData.currentPage,
-      endPage: this.pageData.endPage,
+      currentPage: 1,
+      endPage: 8,
     }
   },
   watch: {

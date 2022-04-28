@@ -29,23 +29,16 @@ export default {
 
   provide() {
     return {
-      betAmountList: this.provideData.betAmountList,
       addBet: this.addBet,
       cupon: this.provideData.cupon,
-      pageData: this.provideData.pageData,
     }
   },
   data() {
     return {
       provideData: {
-        betAmountList: [5, 10, 20, 30, 50, 100, 200, 500, 1000, 1500, 2500],
         cupon: {
           betAmount: 5,
           matches: [],
-        },
-        pageData: {
-          currentPage: 1,
-          endPage: 8,
         },
       },
     }

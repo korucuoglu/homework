@@ -34,7 +34,13 @@
 
 <script>
 export default {
-  inject: ['betAmountList', 'cupon'],
+  inject: ['cupon'],
+  data() {
+    return {
+      betAmountList: [5, 10, 20, 30, 50, 100, 200, 500, 1000, 1500, 2500],
+    }
+  },
+
   computed: {
     getTotalWin() {
       return (this.getTotalRate * this.cupon.betAmount).toFixed(2)
