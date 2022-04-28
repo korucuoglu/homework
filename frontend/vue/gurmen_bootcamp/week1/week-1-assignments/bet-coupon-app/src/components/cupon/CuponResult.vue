@@ -8,7 +8,7 @@
         class="btn-sm"
         v-for="amount in betAmountList"
         :key="amount"
-        @click="cupon.betAmount = amount"
+        @click="betAmount = amount"
       >
         {{ amount }}
       </button>
@@ -34,10 +34,11 @@
 
 <script>
 export default {
-  inject: ['cupon'],
+  props: ['cupon'],
   data() {
     return {
       betAmountList: [5, 10, 20, 30, 50, 100, 200, 500, 1000, 1500, 2500],
+      betAmount: this.cupon.betAmount,
     }
   },
 

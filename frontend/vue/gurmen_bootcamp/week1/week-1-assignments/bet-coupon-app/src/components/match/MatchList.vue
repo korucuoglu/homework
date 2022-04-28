@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import matchService from '../services/match'
+import matchService from '../../services/match'
 import MatchListItem from './MatchListItem.vue'
 import Pagination from './Pagination.vue'
 export default {
