@@ -1,6 +1,6 @@
 <template>
   <div class="pagination">
-    <button @click="currentPage--">&laquo;</button>
+    <button :disabled="currentPage == 1" @click="currentPage--">&laquo;</button>
     <button
       :class="{ active: number == currentPage }"
       v-for="number in endPage"
@@ -10,7 +10,9 @@
       {{ number }}
     </button>
 
-    <button @click="currentPage++">&raquo;</button>
+    <button :disabled="currentPage == endPage" @click="currentPage++">
+      &raquo;
+    </button>
   </div>
 </template>
 
@@ -19,7 +21,7 @@ export default {
   data() {
     return {
       currentPage: 1,
-      endPage: 8,
+      endPage: 9,
     }
   },
   watch: {
