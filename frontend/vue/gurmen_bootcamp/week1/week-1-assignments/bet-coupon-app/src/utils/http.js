@@ -4,6 +4,6 @@ export const http = axios.create({
   baseURL: 'http://localhost:3000',
   header: {
     'X-Application-Name': 'vue',
-    'Accept-Type': 'application/json',
+    'Content-Type': 'application/json',
   },
 })

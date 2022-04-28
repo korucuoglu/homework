@@ -36,6 +36,7 @@ export default {
 .pagination {
   display: inline-block;
   display: flex;
+  gap: 0.2rem;
   justify-content: center;
   align-items: center;
 }
