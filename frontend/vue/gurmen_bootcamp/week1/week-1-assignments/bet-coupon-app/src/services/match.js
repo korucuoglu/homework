@@ -2,8 +2,8 @@ import { http } from '../utils/http'
 
 const MatchService = {
   async getAll(page) {
-    var result = await http.get('data')
-    return this.mappingData(result.data.slice((page - 1) * 9, page * 9))
+    var result = await http.get(`data?_page=${page}&_limit=9`)
+    return this.mappingData(result.data)
   },
   async getById(id) {
     var match = await (await http.get(`data/${id}`)).data
