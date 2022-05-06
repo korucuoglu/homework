@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Kodluyoruz.Api.Entities\Kodluyoruz.Api.Entities.csproj" />
+    <ProjectReference Include="..\Week5.Api.Entities\Week5.Api.Entities.csproj" />
   </ItemGroup>
 
 </Project>

@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Kodluyoruz.Api.DataAccess\Kodluyoruz.Api.DataAccess.csproj" />
+    <ProjectReference Include="..\Week5.Api.DataAccess\Week5.Api.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>

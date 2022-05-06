@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Kodluyoruz.Api.Business\Kodluyoruz.Api.Business.csproj" />
+    <ProjectReference Include="..\Week5.Api.Business\Week5.Api.Business.csproj" />
   </ItemGroup>
 
 </Project>
